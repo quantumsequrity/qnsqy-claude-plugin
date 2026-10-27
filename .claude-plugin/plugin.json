@@ -1,0 +1,27 @@
+{
+  "name": "qnsqy",
+  "displayName": "QNSQY",
+  "version": "1.0.0",
+  "description": "Post-quantum cryptography with QNSQY on your own Linux computer: find quantum-vulnerable cryptography (CBOM), encrypt files to a public key, check signatures and hashes. The plugin's tools have no field for a password, passphrase, private key, API key or payment token, refuse calls that add one, and return none.",
+  "author": {
+    "name": "Quantum Sequrity, Inc.",
+    "email": "support@quantumsequrity.com",
+    "url": "https://quantumsequrity.com"
+  },
+  "homepage": "https://quantumsequrity.com",
+  "keywords": [
+    "post-quantum",
+    "pqc",
+    "cryptography",
+    "cbom",
+    "ml-kem",
+    "ml-dsa",
+    "encryption"
+  ],
+  "icon": "./assets/logo.png",
+  "documentationUrl": "https://quantumsequrity.com/guide",
+  "supportUrl": "https://quantumsequrity.com/contact",
+  "privacyPolicyUrl": "https://quantumsequrity.com/privacy",
+  "termsOfServiceUrl": "https://quantumsequrity.com/terms",
+  "repository": "https://github.com/quantumsequrity/qnsqy-claude-plugin"
+}

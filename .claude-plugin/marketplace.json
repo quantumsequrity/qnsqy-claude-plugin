@@ -1,0 +1,11 @@
+{
+  "name": "quantumsequrity",
+  "description": "Plugins from Quantum Sequrity, Inc., the makers of QNSQY.",
+  "owner": {
+    "name": "Quantum Sequrity, Inc.",
+    "email": "support@quantumsequrity.com"
+  },
+  "plugins": [
+    { "name": "qnsqy", "source": "./" }
+  ]
+}
