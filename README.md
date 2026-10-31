@@ -38,6 +38,9 @@ claude plugin install qnsqy@quantumsequrity
 
 Then start a new Claude Code session, or run `/reload-plugins`.
 
+Using Codex? Install our Codex plugin instead:
+https://github.com/quantumsequrity/qnsqy-codex
+
 If you added QNSQY to Claude Code yourself before, remove that entry with
 `claude mcp remove <its name>`, so that Claude sees only this plugin's tools.
 It is an MCP server that runs `qnsqy --mcp`, and `claude mcp list` shows its
