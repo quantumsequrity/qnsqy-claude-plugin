@@ -1,7 +1,8 @@
 # QNSQY for Claude
 
 QNSQY is a post-quantum cryptography (PQC) toolkit from Quantum Sequrity. This
-plugin lets Claude Code use the QNSQY program installed on your own computer.
+plugin teaches Claude Code to use the QNSQY program installed on your own
+computer, through QNSQY's strict tool server, which you add once (see Install).
 With it, Claude can:
 
 *   find quantum-vulnerable cryptography and write a CBOM (cryptography bill of
@@ -11,15 +12,15 @@ With it, Claude can:
 *   check ML-DSA signatures, QNSQY release signatures, hashes and encrypted
     files.
 
-The plugin's tools have no field for a password, passphrase, private key, API
+The strict tools have no field for a password, passphrase, private key, API
 key or payment token, refuse any call that adds one, and never return one.
 
 ## Requirements
 
 *   **Linux** (x86_64 or ARM64) with QNSQY's current release installed from our
     signed packages at https://quantumsequrity.com/download, so that `qnsqy` is
-    on your `PATH`. The plugin starts whatever `qnsqy` your `PATH` finds first,
-    so install QNSQY only from there.
+    on your `PATH`. The strict server runs whatever `qnsqy` your `PATH` finds
+    first, so install QNSQY only from there.
     Windows and macOS are not supported by the plugin yet.
 *   **Claude Code** on the same computer. In claude.ai chat the plugin has no
     QNSQY tools, because chat cannot start programs on your computer. Cowork has
@@ -36,20 +37,27 @@ claude plugin marketplace add quantumsequrity/qnsqy-claude-plugin
 claude plugin install qnsqy@quantumsequrity
 ```
 
-Then start a new Claude Code session, or run `/reload-plugins`.
+Then add QNSQY's strict tool server once. The plugin does not start it for you:
+
+```
+claude mcp add --scope user qnsqy -- qnsqy --mcp-profile=strict
+```
+
+Then start a new Claude Code session.
 
 Using Codex? Install our Codex plugin instead:
 https://github.com/quantumsequrity/qnsqy-codex
 
-If you added QNSQY to Claude Code yourself before, remove that entry with
-`claude mcp remove <its name>`, so that Claude sees only this plugin's tools.
-It is an MCP server that runs `qnsqy --mcp`, and `claude mcp list` shows its
-name.
+If you added QNSQY to Claude Code before with `qnsqy --mcp`, remove that entry
+first with `claude mcp remove <its name>`, so that Claude sees only the strict
+tools. `claude mcp list` shows its name.
 
 ## What the plugin runs, sends and fetches
 
-*   **Runs**: Claude Code starts your installed QNSQY as a local tool server
-    with `qnsqy --mcp-profile=strict`. Each tool call runs the matching QNSQY
+*   **Runs**: the plugin itself runs nothing. It is a skill that tells Claude
+    how to use QNSQY safely. The server you add in Install makes Claude Code
+    start your installed QNSQY as a local tool server with
+    `qnsqy --mcp-profile=strict`. Each tool call runs the matching QNSQY
     command on your computer, inside QNSQY's sandbox.
 *   **Tools**: Claude sees 13 tools (10 on the Free plan):
     *   scan;
@@ -135,13 +143,14 @@ name.
 
 *   **No QNSQY tools appear, or the server failed to start.** One of these is
     the cause:
+    *   the strict server has not been added (see Install);
     *   QNSQY is not installed;
     *   `qnsqy` is not on your `PATH`;
     *   your QNSQY is older than the current release. Older releases do not know
-        the plugin's option, so they stop.
+        the strict option, so they stop.
 
-    Install the current release from https://quantumsequrity.com/download, then
-    run `/reload-plugins`. On Windows and macOS the plugin is not available yet.
+    Install the current release from https://quantumsequrity.com/download, add
+    the strict server (see Install), then start a new Claude Code session. On Windows and macOS the plugin is not available yet.
 *   **"Not logged in"** or **"Login required"**: sign in with the QNSQY app,
     or with `qnsqy login` in your own terminal. Scanning needs a signed-in
     account, on every plan.

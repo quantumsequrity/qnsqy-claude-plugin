@@ -1,8 +1,8 @@
 {
   "name": "qnsqy",
   "displayName": "QNSQY",
-  "version": "1.0.1",
-  "description": "Post-quantum cryptography with QNSQY on your own Linux computer: find quantum-vulnerable cryptography (CBOM), encrypt files to a public key, check signatures and hashes. The plugin's tools have no field for a password, passphrase, private key, API key or payment token, refuse calls that add one, and return none.",
+  "version": "1.1.0",
+  "description": "Post-quantum cryptography with QNSQY on your own Linux computer: find quantum-vulnerable cryptography (CBOM), encrypt files to a public key, check signatures and hashes, through QNSQY's strict tool server, which you add once. Its tools have no field for a password, passphrase, private key, API key or payment token, refuse calls that add one, and return none.",
   "author": {
     "name": "Quantum Sequrity, Inc.",
     "email": "support@quantumsequrity.com",

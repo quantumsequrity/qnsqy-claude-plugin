@@ -10,6 +10,20 @@ implements the FIPS 203 (ML-KEM) and FIPS 204 (ML-DSA) algorithms, but it is
 not FIPS 140-validated, SOC 2 certified, FedRAMP authorized or HIPAA-audited,
 so never say or suggest that it is.
 
+## Setup
+
+This plugin does not start QNSQY by itself. The QNSQY tools come from
+QNSQY's strict tool server, which the user adds to Claude Code once. If you have
+no tools whose names start with `mcp__qnsqy__`, tell the user to run this in
+their own terminal and then start a new Claude Code session:
+
+```
+claude mcp add --scope user qnsqy -- qnsqy --mcp-profile=strict
+```
+
+If they added QNSQY to Claude Code before with `qnsqy --mcp`, they remove that
+entry first with `claude mcp remove <its name>`; `claude mcp list` shows it.
+
 ## Where the tools work
 
 The QNSQY tools come from the QNSQY program on the user's own computer.
@@ -23,9 +37,11 @@ The QNSQY tools come from the QNSQY program on the user's own computer.
 
 ## Rules
 
-1.  **Use only this plugin's QNSQY tools.** Their names start with
-    `mcp__plugin_qnsqy_qnsqy__`. Never call a QNSQY tool from another server
-    that takes a password, passphrase or payment token.
+1.  **Use only the strict QNSQY tools.** Their names start with
+    `mcp__qnsqy__`, and none of them has a field for a password, passphrase,
+    private key or payment token. If a QNSQY tool has such a field, it comes
+    from a different server: never call it, and give the user the Setup
+    command.
 2.  **Never ask for, accept or pass on a secret.** A secret is a password,
     passphrase, private key, API key or payment token. Never ask for one,
     accept one, repeat one or pass one on, whether in a tool call, a command or
@@ -62,7 +78,7 @@ The tools you see depend on the user's plan and on their QNSQY build, so rely
 on the tool list that you actually have.
 
 *   **Find quantum-vulnerable cryptography or make a CBOM**: the scan tool. Use
-    `format: cyclonedx` for a CycloneDX 1.6 CBOM. It does not overwrite an
+    `format: cyclonedx` for a CycloneDX 1.7 CBOM. It does not overwrite an
     existing report file.
 *   **Encrypt for someone**: use the encrypt tool for one file and the batch
     encrypt tool for several files (Pro and above). Set `recipient` to the
@@ -85,14 +101,16 @@ on the tool list that you actually have.
 ## Troubleshooting
 
 *   **No QNSQY tools appear.** One of these is the cause:
+    *   the strict server has not been added (see Setup);
     *   QNSQY is not installed, or it is not on `PATH`;
-    *   QNSQY is older than the current release, which stops on the plugin's
+    *   QNSQY is older than the current release, which stops on the strict
         option;
     *   the computer runs Windows or macOS, which the plugin does not support
         yet.
 
     On Linux, the user installs the current release from
-    https://quantumsequrity.com/download and then runs `/reload-plugins`.
+    https://quantumsequrity.com/download, adds the strict server with the
+    Setup command, and starts a new Claude Code session.
 *   **"Not logged in"** or **"Login required"**: the user signs in with the
     QNSQY app, or with `qnsqy login` in their own terminal. Scanning needs a
     signed-in account on every plan.
